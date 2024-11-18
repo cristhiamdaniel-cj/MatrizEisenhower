@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Matriz de Eisenhower{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container mt-5">
+        <header>
+            <h1 class="text-center">Matriz de Eisenhower</h1>
+        </header>
+        {% block content %}
+        {% endblock %}
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const taskModal = document.getElementById('taskModal');
+        taskModal.addEventListener('show.bs.modal', function (event) {
+            const button = event.relatedTarget;
+            const taskId = button.getAttribute('data-id');
+            const taskTitle = button.getAttribute('data-title');
+            const taskDescription = button.getAttribute('data-description');
+            const taskQuadrant = button.getAttribute('data-quadrant');
+
+            const modalTitleInput = document.getElementById('taskTitle');
+            const modalDescriptionInput = document.getElementById('taskDescription');
+            const modalQuadrantSelect = document.getElementById('taskQuadrant');
+            const updateForm = document.getElementById('updateTaskForm');
+
+            modalTitleInput.value = taskTitle;
+            modalDescriptionInput.value = taskDescription;
+            modalQuadrantSelect.value = taskQuadrant;
+            updateForm.action = `/update/${taskId}`;
+        });
+    </script>
+</body>
+</html>

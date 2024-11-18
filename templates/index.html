@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+
+{% block title %}Matriz de Eisenhower - Principal{% endblock %}
+
+{% block content %}
+<div class="row mt-4">
+    <!-- Urgente e Importante -->
+    <div class="col-md-6 quadrant">
+        <h3>Urgente e Importante</h3>
+        <ul>
+            {% for task in matrix['Urgente-Importante'] %}
+                <li>
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#taskModal"
+                       data-id="{{ task.id }}" data-title="{{ task.title }}"
+                       data-description="{{ task.description }}"
+                       data-quadrant="{{ task.quadrant }}">
+                        {{ task.title }}
+                    </a>
+                    <a href="/delete/{{ task.id }}">Eliminar</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- No Urgente e Importante -->
+    <div class="col-md-6 quadrant">
+        <h3>No Urgente e Importante</h3>
+        <ul>
+            {% for task in matrix['No Urgente-Importante'] %}
+                <li>
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#taskModal"
+                       data-id="{{ task.id }}" data-title="{{ task.title }}"
+                       data-description="{{ task.description }}"
+                       data-quadrant="{{ task.quadrant }}">
+                        {{ task.title }}
+                    </a>
+                    <a href="/delete/{{ task.id }}">Eliminar</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <!-- Urgente y No Importante -->
+    <div class="col-md-6 quadrant">
+        <h3>Urgente y No Importante</h3>
+        <ul>
+            {% for task in matrix['Urgente-No Importante'] %}
+                <li>
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#taskModal"
+                       data-id="{{ task.id }}" data-title="{{ task.title }}"
+                       data-description="{{ task.description }}"
+                       data-quadrant="{{ task.quadrant }}">
+                        {{ task.title }}
+                    </a>
+                    <a href="/delete/{{ task.id }}">Eliminar</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- No Urgente y No Importante -->
+    <div class="col-md-6 quadrant">
+        <h3>No Urgente y No Importante</h3>
+        <ul>
+            {% for task in matrix['No Urgente-No Importante'] %}
+                <li>
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#taskModal"
+                       data-id="{{ task.id }}" data-title="{{ task.title }}"
+                       data-description="{{ task.description }}"
+                       data-quadrant="{{ task.quadrant }}">
+                        {{ task.title }}
+                    </a>
+                    <a href="/delete/{{ task.id }}">Eliminar</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+<form class="mt-5" action="/add" method="POST">
+    <h3>Agregar Tarea</h3>
+    <input type="text" name="title" placeholder="Título" required>
+    <input type="text" name="description" placeholder="Descripción">
+    <select name="quadrant">
+        <option value="Urgente-Importante">Urgente e Importante</option>
+        <option value="No Urgente-Importante">No Urgente e Importante</option>
+        <option value="Urgente-No Importante">Urgente y No Importante</option>
+        <option value="No Urgente-No Importante">No Urgente y No Importante</option>
+    </select>
+    <button type="submit">Agregar</button>
+</form>
+
+<!-- Modal -->
+<div class="modal fade" id="taskModal" tabindex="-1" aria-labelledby="taskModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="updateTaskForm" method="POST" action="">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="taskModalLabel">Actualizar Tarea</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="taskTitle" class="form-label">Título</label>
+                        <input type="text" class="form-control" id="taskTitle" name="title" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="taskDescription" class="form-label">Descripción</label>
+                        <textarea class="form-control" id="taskDescription" name="description" rows="3"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="taskQuadrant" class="form-label">Cuadrante</label>
+                        <select class="form-select" id="taskQuadrant" name="quadrant">
+                            <option value="Urgente-Importante">Urgente e Importante</option>
+                            <option value="No Urgente-Importante">No Urgente e Importante</option>
+                            <option value="Urgente-No Importante">Urgente y No Importante</option>
+                            <option value="No Urgente-No Importante">No Urgente y No Importante</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
